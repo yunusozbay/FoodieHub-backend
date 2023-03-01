@@ -15,6 +15,7 @@ router.post("/signup", async (req, res, next) => {
   const hashedPassword = bcrypt.hashSync(req.body.password, salt);
   // Create the User
   await User.create({
+    username: req.body.username,
     email: req.body.email,
     passwordHash: hashedPassword,
   });
@@ -24,7 +25,7 @@ router.post("/signup", async (req, res, next) => {
 // Login
 router.post("/login", async (req, res, next) => {
   // Check for user
-  const matchedUsers = await User.find({ email: req.body.email });
+  const matchedUsers = await User.find({ username: req.body.username });
   console.log(req.body);
   if (matchedUsers.length) {
     const currentUser = matchedUsers[0];
@@ -34,7 +35,7 @@ router.post("/login", async (req, res, next) => {
       const token = jwt.sign(
         {
           exp: Math.floor(Date.now() / 1000) + 60 * 60,
-          data: { user: { email: currentUser.email, id: currentUser._id } },
+          data: { user: { username: currentUser.username, id: currentUser._id } },
         },
         process.env.TOKEN_SECRET,
         {
