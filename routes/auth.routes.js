@@ -26,7 +26,6 @@ router.post("/signup", async (req, res, next) => {
 router.post("/login", async (req, res, next) => {
   // Check for user
   const matchedUsers = await User.find({ username: req.body.username });
-  console.log(req.body);
   if (matchedUsers.length) {
     const currentUser = matchedUsers[0];
     // Check password
@@ -35,14 +34,23 @@ router.post("/login", async (req, res, next) => {
       const token = jwt.sign(
         {
           exp: Math.floor(Date.now() / 1000) + 60 * 60,
-          data: { user: { username: currentUser.username, id: currentUser._id } },
+          data: {
+            user: {
+              username: currentUser.username,
+              id: currentUser._id,
+              email: currentUser.email,
+              restaurants: currentUser.restaurants,
+              events: currentUser.events,
+              friends: currentUser.friends
+            },
+          },
         },
         process.env.TOKEN_SECRET,
         {
           algorithm: "HS256",
         }
       );
-      res.status(200).json({ token });
+      res.status(200).json({ token, currentUser });
     } else {
       res.status(403).json({ message: "Wrong password" });
     }
@@ -54,7 +62,7 @@ router.post("/login", async (req, res, next) => {
 //Verify
 router.get("/verify", isAuthenticated, (req, res, next) => {
   if (req.payload) {
-    res.json(req.payload.data.user);
+    return res.json(req.payload.data.user);
   }
 });
 
