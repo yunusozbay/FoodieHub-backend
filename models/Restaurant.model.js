@@ -14,8 +14,7 @@ const restaurantSchema = new Schema(
       trim: true,
     },
     address: {
-      type: String,
-      trim: true,
+        type: Object,
     },
     coordinates: {
         type: Object,
