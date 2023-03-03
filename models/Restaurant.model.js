@@ -14,30 +14,30 @@ const restaurantSchema = new Schema(
       trim: true,
     },
     address: {
-        type: Object,
+      type: Object,
     },
     coordinates: {
-        type: Object,
+      type: Object,
     },
     phone: {
-        type: String,
-        trim: true,
+      type: String,
+      trim: true,
     },
     price: {
-        type: String,
-        trim: true,
+      type: String,
+      trim: true,
     },
     rating: {
-        type: Number,
-        trim: true,
+      type: Number,
+      trim: true,
     },
     review_count: {
-        type: Number,
-        trim: true,
+      type: Number,
+      trim: true,
     },
     userPhotos: [],
     userRating: {
-        type: Number,
+      type: Number,
     },
   },
   {
