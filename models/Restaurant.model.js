@@ -9,6 +9,10 @@ const restaurantSchema = new Schema(
       lowercase: true,
       trim: true,
     },
+    alias: {
+      type: String,
+      trim: true,
+    },
     image_url: {
       type: String,
       trim: true,
