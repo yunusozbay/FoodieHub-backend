@@ -40,7 +40,10 @@ router.post("/new", async (req, res, next) => {
 //Show event
 router.get("/:id", async (req, res, next) => {
   try {
-    const foundEvent = await Event.findById(req.params.id);
+    const foundEvent = await Event.findById(req.params.id).populate(
+      "restaurant"
+    );
+    console.log(foundEvent);
     res.status(200).json({ foundEvent });
   } catch (err) {
     console.log("Ohh nooo, error", err);
