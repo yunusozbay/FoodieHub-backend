@@ -21,7 +21,7 @@ router.post("/:id/update", async (req, res) => {
       { ...req.body },
       { new: true }
     );
-    console.log(req.body);
+    console.log(updatedUser);
     res.status(200).json({ updatedUser });
   } catch (err) {
     console.log("Ohh nooo, error", err);
