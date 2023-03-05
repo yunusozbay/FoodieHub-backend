@@ -2,6 +2,9 @@ const { Schema, model } = require("mongoose");
 
 const eventSchema = new Schema(
   {
+    title: {
+      type: String,
+    },
     restaurant: {
       type: Schema.Types.ObjectId,
       ref: "Restaurant",
@@ -18,6 +21,9 @@ const eventSchema = new Schema(
     },
     date: {
       type: Date,
+    },
+    time: {
+      type: String,
     },
   },
   {

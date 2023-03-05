@@ -9,36 +9,39 @@ const restaurantSchema = new Schema(
       lowercase: true,
       trim: true,
     },
+    alias: {
+      type: String,
+      trim: true,
+    },
     image_url: {
       type: String,
       trim: true,
     },
     address: {
+      type: Object,
+    },
+    coordinates: {
+      type: Object,
+    },
+    phone: {
       type: String,
       trim: true,
     },
-    coordinates: {
-        type: Object,
-    },
-    phone: {
-        type: String,
-        trim: true,
-    },
     price: {
-        type: String,
-        trim: true,
+      type: String,
+      trim: true,
     },
     rating: {
-        type: Number,
-        trim: true,
+      type: Number,
+      trim: true,
     },
     review_count: {
-        type: Number,
-        trim: true,
+      type: Number,
+      trim: true,
     },
     userPhotos: [],
     userRating: {
-        type: Number,
+      type: Number,
     },
   },
   {

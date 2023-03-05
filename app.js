@@ -23,6 +23,11 @@ app.use("/auth", authRoutes);
 
 const profileRoutes = require("./routes/profile.routes");
 app.use("/profile", profileRoutes);
+const eventRoutes = require("./routes/event.routes");
+app.use("/events", eventRoutes);
+
+const userRoutes = require("./routes/user.routes");
+app.use("/users", userRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);

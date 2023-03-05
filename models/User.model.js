@@ -38,6 +38,18 @@ const userSchema = new Schema(
         ref: "User",
       },
     ],
+    friend_requests: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    invitations: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Event",
+      },
+    ],
   },
   {
     timestamps: true,
