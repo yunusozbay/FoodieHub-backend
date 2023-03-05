@@ -25,7 +25,9 @@ router.post("/signup", async (req, res, next) => {
 // Login
 router.post("/login", async (req, res, next) => {
   // Check for user
-  const matchedUsers = await User.find({ username: req.body.username });
+  const matchedUsers = await User.find({
+    username: req.body.username,
+  }).populate("friend_requests");
   if (matchedUsers.length) {
     const currentUser = matchedUsers[0];
     // Check password
@@ -41,7 +43,9 @@ router.post("/login", async (req, res, next) => {
               email: currentUser.email,
               restaurants: currentUser.restaurants,
               events: currentUser.events,
-              friends: currentUser.friends
+              friends: currentUser.friends,
+              friend_requests: currentUser.friend_requests,
+              invitations: currentUser.invitations,
             },
           },
         },
