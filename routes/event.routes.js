@@ -24,6 +24,7 @@ router.post("/new", async (req, res, next) => {
       restaurant: newRestaurant._id,
       date: new Date(req.body.newEvent.date),
       time: req.body.newEvent.time,
+      invited_users: req.body.newEvent.invited_users,
       created_by: req.body.userData.id,
     });
     const updatedUser = await User.findByIdAndUpdate(
@@ -31,6 +32,12 @@ router.post("/new", async (req, res, next) => {
       { $push: { events: newEvent._id } },
       { new: true }
     );
+    const invitedUsers = await User.updateMany(
+      { _id: { $in: req.body.newEvent.invited_users } },
+      { $push: { invitations: newEvent._id } },
+      { new: true }
+    );
+    console.log(invitedUsers);
     res.status(201).json({ message: "Event created" });
   } catch (err) {
     console.log("Ohh nooo, error", err);
@@ -41,7 +48,7 @@ router.post("/new", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   try {
     const foundEvent = await Event.findById(req.params.id).populate(
-      "restaurant"
+      "restaurant invited_users created_by"
     );
     console.log(foundEvent);
     res.status(200).json({ foundEvent });

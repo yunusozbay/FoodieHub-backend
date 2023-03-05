@@ -27,7 +27,7 @@ router.post("/login", async (req, res, next) => {
   // Check for user
   const matchedUsers = await User.find({
     username: req.body.username,
-  }).populate("friend_requests");
+  }).populate("friend_requests friends invitations events");
   if (matchedUsers.length) {
     const currentUser = matchedUsers[0];
     // Check password
