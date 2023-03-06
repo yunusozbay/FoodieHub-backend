@@ -47,11 +47,9 @@ router.post("/update", async (req, res, next) => {
 
 router.post("/delete", async (req, res, next) => {
   try {
-    const userId = req.body.userData.id;
-    const restoId = req.body.restaurant._id
-    const currentUser = await User.findByIdAndUpdate(userId, {$pull: { restaurants: restoId } }, {new:true});
-
-    res.status(200).json({currentUser});
+    const restoId = req.body.id
+    const restaurant = await Restaurant.findByIdAndDelete(restoId);
+    res.status(200).json({restaurant});
   } catch (error) {
     console.log(error);
   }
