@@ -54,7 +54,7 @@ router.post("/login", async (req, res, next) => {
           algorithm: "HS256",
         }
       );
-      res.status(200).json({ token, currentUser });
+      res.status(200).json({ token });
     } else {
       res.status(403).json({ message: "Wrong password" });
     }
