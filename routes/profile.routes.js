@@ -6,7 +6,7 @@ const isAuthenticated = require("../middlewares/isAuthenticated");
 router.get("/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
   const userProfile = await User.findById(id);
-  res.status(200).json({ ...userProfile });
+  res.status(200).json({ userProfile });
 });
 
 router.put("/:id", isAuthenticated, async (req, res, next) => {

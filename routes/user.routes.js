@@ -9,7 +9,7 @@ router.get("/", async (req, res, next) => {
 
 //One user
 router.get("/:id", async (req, res, next) => {
-  const oneUser = await User.findById(req.params.id);
+  const oneUser = await User.findById(req.params.id).populate("restaurants");
   res.json({ oneUser });
 });
 
