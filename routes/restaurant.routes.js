@@ -8,7 +8,7 @@ router.post("/add", async (req, res, next) => {
     const resto = await Restaurant.create({
       name: restaurant.name,
       image_url: restaurant.image_url,
-      address: restaurant.location,
+      location: restaurant.location,
       coordinates: restaurant.coordinates,
       phone: restaurant.display_phone,
       price: restaurant.price,
@@ -47,9 +47,9 @@ router.post("/update", async (req, res, next) => {
 
 router.post("/delete", async (req, res, next) => {
   try {
-    const restoId = req.body.id
+    const restoId = req.body.id;
     const restaurant = await Restaurant.findByIdAndDelete(restoId);
-    res.status(200).json({restaurant});
+    res.status(200).json({ restaurant });
   } catch (error) {
     console.log(error);
   }
