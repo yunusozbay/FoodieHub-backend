@@ -9,11 +9,7 @@ router.get("/", async (req, res, next) => {
 
 //One user
 router.get("/:id", async (req, res, next) => {
-<<<<<<< HEAD
-  const oneUser = await User.findById(req.params.id).populate('restaurants')
-=======
-  const oneUser = await User.findById(req.params.id).populate('restaurants');
->>>>>>> 974151f7375a3891cf539ffe3d6954e492d85079
+  const oneUser = await User.findById(req.params.id).populate("restaurants");
   res.json({ oneUser });
 });
 
