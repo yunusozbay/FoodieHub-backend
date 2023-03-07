@@ -30,11 +30,13 @@ router.post("/add", async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/profile/:id", async (req, res, next) => {
   try {
-    const userId = req.body.userData.id;
-    const restos = await User.findById(userId).populate("restaurants");
-    res.status(200).json(restos);
+    const restoId = req.params.id;
+    console.log(restoId);
+    const restaurant = await Restaurant.findById(restoId);
+    console.log(restaurant);
+    res.status(200).json({restaurant});
   } catch (error) {
     console.log(error);
   }
