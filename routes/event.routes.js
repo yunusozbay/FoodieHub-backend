@@ -7,8 +7,8 @@ const router = require("express").Router();
 //Create an event
 router.post("/new", async (req, res, next) => {
   try {
-    const user = await User.findById(req.body.userData.id);
-    console.log(req.body.userData.id, user);
+    const user = await User.findById(req.body.userData._id);
+    console.log(req.body.userData._id, user);
     const newRestaurant = await Restaurant.create({
       name: req.body.restaurant.name,
       image_url: req.body.restaurant.image_url,
@@ -25,7 +25,7 @@ router.post("/new", async (req, res, next) => {
       date: new Date(req.body.newEvent.date),
       time: req.body.newEvent.time,
       invited_users: req.body.newEvent.invited_users,
-      created_by: req.body.userData.id,
+      created_by: req.body.userData._id,
     });
     const updatedUser = await User.findByIdAndUpdate(
       user._id,
