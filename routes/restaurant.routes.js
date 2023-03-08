@@ -8,6 +8,7 @@ router.post("/add", async (req, res, next) => {
   try {
     const resto = await Restaurant.create({
       name: restaurant.name,
+      alias: restaurant.alias,
       image_url: restaurant.image_url,
       location: restaurant.location,
       coordinates: restaurant.coordinates,
@@ -15,6 +16,7 @@ router.post("/add", async (req, res, next) => {
       price: restaurant.price,
       rating: restaurant.rating,
       review_count: restaurant.review_count,
+    
     });
     const userId = req.body.userData._id;
     const updatedUser = await User.findByIdAndUpdate(
