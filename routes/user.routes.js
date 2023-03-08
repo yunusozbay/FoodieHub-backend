@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const isAuthenticated = require("../middlewares/isAuthenticated");
 const User = require("../models/User.model");
 
 //All users
@@ -7,12 +8,20 @@ router.get("/", async (req, res, next) => {
   res.json({ allUsers });
 });
 
+//Show profile
+router.get("/:id", isAuthenticated, async (req, res, next) => {
+  console.log(req.payload);
+  if (req.payload) {
+    const oneUser = await User.findById(req.params.id).populate("restaurants");
+    console.log(oneUser);
+    res.json({ oneUser });
+  }
+});
+
 //One user
-router.get("/:id", async (req, res, next) => {
-
-  const oneUser = await User.findById(req.params.id).populate('restaurants')
-
-
+router.get("/:id/details", async (req, res, next) => {
+  const oneUser = await User.findById(req.params.id).populate("restaurants");
+  console.log(oneUser);
   res.json({ oneUser });
 });
 
