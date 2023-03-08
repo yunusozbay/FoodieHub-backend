@@ -16,16 +16,14 @@ router.post("/add", async (req, res, next) => {
       rating: restaurant.rating,
       review_count: restaurant.review_count,
     });
-    const userId = req.body.userData.id;
+    const userId = req.body.userData._id;
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { $push: { restaurants: resto } },
+      { $push: { restaurants: resto._id } },
       { new: true }
     );
     console.log(updatedUser);
-    res
-      .status(201)
-      .json({ message: "Restaurant created and added to the list of user" });
+    res.status(201).json({ updatedUser });
   } catch (error) {
     console.log(error);
   }
@@ -35,7 +33,7 @@ router.get("/profile/:id", async (req, res, next) => {
   try {
     const restoId = req.params.id;
     const restaurant = await Restaurant.findById(restoId);
-    res.status(200).json({restaurant});
+    res.status(200).json({ restaurant });
   } catch (error) {
     console.log(error);
   }
@@ -56,17 +54,28 @@ router.post("/delete", async (req, res, next) => {
   }
 });
 
-router.post("/profile/:id/edit", uploader.single("userPhotos"), async (req, res, next) => {  
+router.post(
+  "/profile/:id/edit",
+  uploader.single("userPhotos"),
+  async (req, res, next) => {
     try {
-        let image = ""
-        if (!req.file) {    res.status(200).json({ message: "no image" });  } 
-        else { image = req.file.path}
-        console.log(image)
-        const updatedRestaurant = await Restaurant.findByIdAndUpdate(req.params.id, { $push: { userPhotos: image } },{ new: true });
-        console.log(updatedRestaurant)
-        res.status(200).json({ updatedRestaurant})
-      } catch (err) {
-        console.log("Ohh nooo, error", err); 
+      let image = "";
+      if (!req.file) {
+        res.status(200).json({ message: "no image" });
+      } else {
+        image = req.file.path;
       }
-    });
+      console.log(image);
+      const updatedRestaurant = await Restaurant.findByIdAndUpdate(
+        req.params.id,
+        { $push: { userPhotos: image } },
+        { new: true }
+      );
+      console.log(updatedRestaurant);
+      res.status(200).json({ updatedRestaurant });
+    } catch (err) {
+      console.log("Ohh nooo, error", err);
+    }
+  }
+);
 module.exports = router;

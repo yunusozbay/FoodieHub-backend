@@ -39,7 +39,7 @@ router.post("/login", async (req, res, next) => {
           data: {
             user: {
               username: currentUser.username,
-              id: currentUser._id,
+              _id: currentUser._id,
               email: currentUser.email,
               restaurants: currentUser.restaurants,
               events: currentUser.events,
