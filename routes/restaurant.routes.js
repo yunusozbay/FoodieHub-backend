@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/User.model");
 const Restaurant = require("../models/Restaurant.model");
+const uploader = require("../middlewares/cloudinary.config.js");
 
 router.post("/add", async (req, res, next) => {
   const restaurant = req.body.restaurant;
@@ -30,11 +31,11 @@ router.post("/add", async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/profile/:id", async (req, res, next) => {
   try {
-    const userId = req.body.userData.id;
-    const restos = await User.findById(userId).populate("restaurants");
-    res.status(200).json(restos);
+    const restoId = req.params.id;
+    const restaurant = await Restaurant.findById(restoId);
+    res.status(200).json({restaurant});
   } catch (error) {
     console.log(error);
   }
@@ -55,4 +56,17 @@ router.post("/delete", async (req, res, next) => {
   }
 });
 
+router.post("/profile/:id/edit", uploader.single("userPhotos"), async (req, res, next) => {  
+    try {
+        let image = ""
+        if (!req.file) {    res.status(200).json({ message: "no image" });  } 
+        else { image = req.file.path}
+        console.log(image)
+        const updatedRestaurant = await Restaurant.findByIdAndUpdate(req.params.id, { $push: { userPhotos: image } },{ new: true });
+        console.log(updatedRestaurant)
+        res.status(200).json({ updatedRestaurant})
+      } catch (err) {
+        console.log("Ohh nooo, error", err); 
+      }
+    });
 module.exports = router;
