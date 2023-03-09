@@ -20,6 +20,9 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required."],
     },
+    image_url: {
+      type: String
+    },
     restaurants: [
       {
         type: Schema.Types.ObjectId,
@@ -39,6 +42,12 @@ const userSchema = new Schema(
       },
     ],
     friend_requests: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    friend_requests_sent: [
       {
         type: Schema.Types.ObjectId,
         ref: "User",
