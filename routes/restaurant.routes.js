@@ -5,7 +5,7 @@ const uploader = require("../middlewares/cloudinary.config.js");
 
 router.post("/add", async (req, res, next) => {
   const restaurant = req.body.restaurant;
-  console.log(restaurant)
+  console.log(restaurant);
   try {
     const resto = await Restaurant.create({
       name: restaurant.name,
@@ -23,7 +23,7 @@ router.post("/add", async (req, res, next) => {
       userId,
       { $push: { restaurants: resto._id } },
       { new: true }
-    );
+    ).populate("restaurants friends friend_requests events invitations");
     console.log(updatedUser);
     res.status(201).json({ updatedUser });
   } catch (error) {

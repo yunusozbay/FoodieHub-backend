@@ -31,7 +31,7 @@ router.post("/new", async (req, res, next) => {
       user._id,
       { $push: { events: newEvent._id } },
       { new: true }
-    );
+    ).populate("restaurants friends events friend_requests invitations");
     const invitedUsers = await User.updateMany(
       { _id: { $in: req.body.newEvent.invited_users } },
       { $push: { invitations: newEvent._id } },

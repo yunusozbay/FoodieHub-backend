@@ -9,15 +9,12 @@ router.get("/", async (req, res, next) => {
 });
 
 //Show profile
-router.get("/:id", isAuthenticated, async (req, res, next) => {
-  console.log(req.payload);
-  if (req.payload) {
-    const oneUser = await User.findById(req.params.id).populate(
-      "restaurants friends events"
-    );
-    console.log(oneUser);
-    res.json({ oneUser });
-  }
+router.get("/:id", async (req, res, next) => {
+  const oneUser = await User.findById(req.params.id).populate(
+    "restaurants friends events friend_requests invitations"
+  );
+  console.log(oneUser);
+  res.json({ oneUser });
 });
 
 //One user
