@@ -38,7 +38,7 @@ router.post("/new", async (req, res, next) => {
       { new: true }
     );
     console.log(invitedUsers);
-    res.status(201).json({ message: "Event created" });
+    res.status(201).json({ updatedUser });
   } catch (err) {
     console.log("Ohh nooo, error", err);
   }
@@ -64,7 +64,7 @@ router.post("/:id/edit", async (req, res) => {
       req.params.id,
       { ...req.body },
       { new: true }
-    );
+    ).populate("restaurant invited_users created_by");
     res.status(200).json({ updatedEvent });
   } catch (err) {
     console.log("Ohh nooo, error", err);
