@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const User = require("../models/User.model");
+const uploader = require("../middlewares/cloudinary.config.js");
 
 //All users
 router.get("/", async (req, res, next) => {
@@ -34,7 +35,7 @@ router.post("/:id/update", async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
-      { ...req.body },
+      { ...req.body},
       { new: true }
     ).populate("restaurants friends events friend_requests invitations");
     console.log(updatedUser);
