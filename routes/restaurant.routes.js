@@ -5,6 +5,7 @@ const uploader = require("../middlewares/cloudinary.config.js");
 
 router.post("/add", async (req, res, next) => {
   const restaurant = req.body.restaurant;
+  console.log(restaurant)
   try {
     const resto = await Restaurant.create({
       name: restaurant.name,
