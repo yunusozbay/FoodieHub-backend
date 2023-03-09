@@ -5,6 +5,7 @@ const uploader = require("../middlewares/cloudinary.config.js");
 
 router.post("/add", async (req, res, next) => {
   const restaurant = req.body.restaurant;
+  console.log(restaurant)
   try {
     const resto = await Restaurant.create({
       name: restaurant.name,
@@ -16,7 +17,6 @@ router.post("/add", async (req, res, next) => {
       price: restaurant.price,
       rating: restaurant.rating,
       review_count: restaurant.review_count,
-    
     });
     const userId = req.body.userData._id;
     const updatedUser = await User.findByIdAndUpdate(
