@@ -16,7 +16,6 @@ router.post("/add", async (req, res, next) => {
       price: restaurant.price,
       rating: restaurant.rating,
       review_count: restaurant.review_count,
-    
     });
     const userId = req.body.userData._id;
     const updatedUser = await User.findByIdAndUpdate(
@@ -46,11 +45,16 @@ router.post("/update", async (req, res, next) => {
   res.status(200).json(updatedRestaurant);
 });
 
-router.post("/delete", async (req, res, next) => {
+router.post("/:id/delete", async (req, res, next) => {
   try {
-    const restoId = req.body.id;
+    const restoId = req.params.id;
+    console.log(req.body);
     const restaurant = await Restaurant.findByIdAndDelete(restoId);
-    res.status(200).json({ restaurant });
+    const updatedUser = await User.findById(req.body.userId).populate(
+      "restaurants friends events friend_requests invitations"
+    );
+    console.log(updatedUser);
+    res.status(200).json({ updatedUser });
   } catch (error) {
     console.log(error);
   }
