@@ -39,6 +39,7 @@ router.post("/login", async (req, res, next) => {
           data: {
             user: {
               username: currentUser.username,
+              createdAt: currentUser.createdAt,
               _id: currentUser._id,
               email: currentUser.email,
               restaurants: currentUser.restaurants,
