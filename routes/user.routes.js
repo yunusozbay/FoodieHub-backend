@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const User = require("../models/User.model");
+const uploader = require("../middlewares/cloudinary.config.js");
 
 //All users
 router.get("/", async (req, res, next) => {
@@ -34,7 +35,7 @@ router.post("/:id/update", async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
-      { ...req.body },
+      { ...req.body},
       { new: true }
     ).populate("restaurants friends events friend_requests invitations");
     console.log(updatedUser);
@@ -43,5 +44,26 @@ router.post("/:id/update", async (req, res) => {
     console.log("Ohh nooo, error", err);
   }
 });
+
+router.post(
+  "/avatar/:id/update",
+  uploader.single("userPhotos"),
+  async (req, res, next) => {
+    try {
+      let image = "";
+      if (!req.file) {
+        res.status(200).json({ message: "no image" });
+      } else {
+        image = req.file.path;
+      }
+      console.log(image);
+      const updatedUser = await User.findByIdAndUpdate(req.params.id, {...req.body, image_url: image}, {new:true});
+      console.log(updatedUser);
+      res.status(200).json({ updatedUser });
+    } catch (err) {
+      console.log("Ohh nooo, error", err);
+    }
+  }
+);
 
 module.exports = router;
