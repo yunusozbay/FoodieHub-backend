@@ -65,9 +65,8 @@ router.post(
   uploader.single("userPhotos"),
   async (req, res, next) => {
     try {
-      let image = "";
       if (!req.file) {
-        res.status(200).json({ message: "no image" });
+        res.status(400).json({ message: "no image" });
       } else {
         image = req.file.path;
       }
