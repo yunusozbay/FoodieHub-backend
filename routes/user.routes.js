@@ -12,7 +12,9 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", isAuthenticated, async (req, res, next) => {
   console.log(req.payload);
   if (req.payload) {
-    const oneUser = await User.findById(req.params.id).populate("restaurants");
+    const oneUser = await User.findById(req.params.id).populate(
+      "restaurants friends events"
+    );
     console.log(oneUser);
     res.json({ oneUser });
   }
@@ -20,7 +22,9 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
 
 //One user
 router.get("/:id/details", async (req, res, next) => {
-  const oneUser = await User.findById(req.params.id).populate("restaurants");
+  const oneUser = await User.findById(req.params.id).populate(
+    "restaurants friends events"
+  );
   console.log(oneUser);
   res.json({ oneUser });
 });
@@ -32,7 +36,7 @@ router.post("/:id/update", async (req, res) => {
       req.params.id,
       { ...req.body },
       { new: true }
-    );
+    ).populate("restaurants friends events friend_requests invitations");
     console.log(updatedUser);
     res.status(200).json({ updatedUser });
   } catch (err) {
