@@ -45,4 +45,25 @@ router.post("/:id/update", async (req, res) => {
   }
 });
 
+router.post(
+  "/avatar/:id/update",
+  uploader.single("userPhotos"),
+  async (req, res, next) => {
+    try {
+      let image = "";
+      if (!req.file) {
+        res.status(200).json({ message: "no image" });
+      } else {
+        image = req.file.path;
+      }
+      console.log(image);
+      const updatedUser = await User.findByIdAndUpdate(req.params.id, {...req.body, image_url: image}, {new:true});
+      console.log(updatedUser);
+      res.status(200).json({ updatedUser });
+    } catch (err) {
+      console.log("Ohh nooo, error", err);
+    }
+  }
+);
+
 module.exports = router;
