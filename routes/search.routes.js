@@ -1,11 +1,12 @@
 const router = require("express").Router();
+const axios = require('axios')
 YELP_URL=process.env.YELP_URL
 YELP_TOKEN=process.env.YELP_TOKEN
 
 router.post("/restaurant", async (req, res, next) => {
   try {
     console.log(req.body)
-      const random = await fetch(
+      const random = await axios.get(
         `${YELP_URL}/${req.body.id}`,
           {
             headers: {
@@ -14,8 +15,7 @@ router.post("/restaurant", async (req, res, next) => {
             },
           }
         );
-        const parsed = await random.json()
-        res.json(parsed);
+        res.json(random.data);
   } catch (error) {
       console.log(error)
   }
@@ -24,7 +24,7 @@ router.post("/restaurant", async (req, res, next) => {
 
 router.post("/restaurants", async (req, res, next) => {
     try {
-        const allRest = await fetch(
+        const allRest = await axios.get(
             `${YELP_URL}/search?location=${req.body.city}&categories=restaurants&term=${req.body.food}&limit=20`,
             {
               headers: {
@@ -33,8 +33,7 @@ router.post("/restaurants", async (req, res, next) => {
               },
             }
           );
-          const parsed = await allRest.json()
-          res.json(parsed);
+          res.json(allRest.data);
     } catch (error) {
         console.log(error)
     }
