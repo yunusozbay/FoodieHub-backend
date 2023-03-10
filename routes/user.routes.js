@@ -35,7 +35,7 @@ router.post("/:id/update", async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
-      { ...req.body},
+      { ...req.body },
       { new: true }
     ).populate("restaurants friends events friend_requests invitations");
     console.log(updatedUser);
@@ -57,7 +57,11 @@ router.post(
         image = req.file.path;
       }
       console.log(image);
-      const updatedUser = await User.findByIdAndUpdate(req.params.id, {...req.body, image_url: image}, {new:true});
+      const updatedUser = await User.findByIdAndUpdate(
+        req.params.id,
+        { ...req.body, image_url: image },
+        { new: true }
+      ).populate("restaurants friends events friend_requests invitations");
       console.log(updatedUser);
       res.status(200).json({ updatedUser });
     } catch (err) {
