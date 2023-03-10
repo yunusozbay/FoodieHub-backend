@@ -8,7 +8,7 @@ const router = require("express").Router();
 router.post("/new", async (req, res, next) => {
   try {
     const user = await User.findById(req.body.userData._id);
-    console.log(req.body.userData._id, user);
+    console.log(req.body);
     const newRestaurant = await Restaurant.create({
       name: req.body.restaurant.name,
       image_url: req.body.restaurant.image_url,
@@ -38,7 +38,7 @@ router.post("/new", async (req, res, next) => {
       { new: true }
     );
     console.log(invitedUsers);
-    res.status(201).json({ updatedUser });
+    res.status(200).json({ updatedUser });
   } catch (err) {
     console.log("Ohh nooo, error", err);
   }
