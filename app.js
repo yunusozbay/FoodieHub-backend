@@ -32,6 +32,9 @@ app.use("/users", userRoutes);
 const restaurantRoutes = require("./routes/restaurant.routes");
 app.use("/restaurants", restaurantRoutes);
 
+const searchRoutes = require("./routes/search.routes");
+app.use("/search", searchRoutes);
+
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
