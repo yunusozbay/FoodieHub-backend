@@ -37,7 +37,6 @@ router.post("/new", async (req, res, next) => {
       { $push: { invitations: newEvent._id } },
       { new: true }
     );
-    console.log(invitedUsers);
     res.status(200).json({ updatedUser });
   } catch (err) {
     console.log("Ohh nooo, error", err);
@@ -50,7 +49,6 @@ router.get("/:id", async (req, res, next) => {
     const foundEvent = await Event.findById(req.params.id).populate(
       "restaurant invited_users created_by"
     );
-    console.log(foundEvent);
     res.status(200).json({ foundEvent });
   } catch (err) {
     console.log("Ohh nooo, error", err);
