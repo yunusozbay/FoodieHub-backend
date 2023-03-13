@@ -5,7 +5,6 @@ YELP_TOKEN=process.env.YELP_TOKEN
 
 router.post("/restaurant", async (req, res, next) => {
   try {
-    console.log(req.body)
       const random = await axios.get(
         `${YELP_URL}/${req.body.id}`,
           {

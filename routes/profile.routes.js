@@ -1,7 +1,6 @@
 const router = require("express").Router();
 
 const User = require("../models/User.model");
-const isAuthenticated = require("../middlewares/isAuthenticated");
 
 router.get("/", async(req, res, next) => {
   res.json({message: "All good in profile route"})
@@ -23,7 +22,6 @@ router.put("/:id", async (req, res, next) => {
 router.delete("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
-    // Delete one recipe
     await User.findByIdAndDelete(id);
     res.status(200).res.json({ message: "user profile deleted properly" });
   } catch (error) {

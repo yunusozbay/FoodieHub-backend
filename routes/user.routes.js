@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const isAuthenticated = require("../middlewares/isAuthenticated");
 const User = require("../models/User.model");
 const uploader = require("../middlewares/cloudinary.config.js");
 
@@ -53,7 +52,6 @@ router.post(
       } else {
         image = req.file.path;
       }
-      console.log(image);
       const updatedUser = await User.findByIdAndUpdate(
         req.params.id,
         { ...req.body, image_url: image },
